@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-password = os.getenv['mongo_pwd']
+password = os.getenv('mongo_pwd')
 
 cluster = MongoClient("mongodb+srv://mongoadmin:{0}@cluster0.h0rrc.mongodb.net/?retryWrites=true&w=majority".format(password))
 db = cluster['twittersentiment']
