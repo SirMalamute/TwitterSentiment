@@ -5,6 +5,7 @@ import spacy
 from nltk.corpus import stopwords
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 import os
+from datetime import datetime
 
 
 nest_asyncio.apply()
@@ -28,7 +29,7 @@ def cleaner(t):
 
 c=twint.Config()
 
-queries = ["NuaWoman"]
+queries = ["@Apple"]
 
 for i in queries:
     filename = i+".csv"
@@ -43,8 +44,8 @@ for i in queries:
     names = list(df['username'])
     tweets_copy = tweets
     tweets = [cleaner(t) for t in tweets]
-    result = {'pos': 0, 'neg': 0, 'neu': 0}
     print(len(tweets))
+    result = {'pos': 0, 'neg': 0, 'neu': 0}
     negatory_comments = []
     negatory_names = []
     for comment in tweets:
@@ -54,12 +55,11 @@ for i in queries:
         elif score['compound'] < -0.05:
             result['neg'] += 1
             negatory_comments.append(tweets_copy[tweets.index(comment)])
+            negatory_names.append(names[tweets.index(comment)])
         else:
             result['neu'] += 1
-    for n in negatory_comments:
-        negatory_names.append(names[negatory_comments.index(n)])    
-    end_df = pd.DataFrame([negatory_names, negatory_comments])
-    end_df.to_csv("End"+filename)
+    end_df = pd.DataFrame({"Name": negatory_names, "Tweet": negatory_comments})
+    end_df.to_csv("({0})".format(datetime.now())+filename)
     print("{0}'s breakdown is".format(i))
     print(result)
     print(negatory_comments)
