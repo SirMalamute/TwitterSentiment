@@ -53,7 +53,8 @@ def emailer(company, results, negative_tweets):
     for x in mydoc:
         addresses.append(x['email'])
     for e in addresses:
-        yag.send(to=e, subject='Report About {0}'.format(company), contents='Hi! This is the report. Currently, out of the latest 500 tweets scraped and analysed, we found {0} positive tweets, {1} neutral tweets and {2} negative tweets. Attatched below is a CSV file of all negative tweets with username and tweet. Thanks!'.format(positive,neutral,negative), attachments=negative_tweets)
+        yag.send(to=e, subject='Report About {0}'.format(company), contents='Hi! This is the report. Currently we attempted to scrape 500 of the most recent tweets, we found {0} positive tweets, {1} neutral tweets and {2} negative tweets. Attatched below is a CSV file of all negative tweets with username and tweet. Thanks!'.format(positive,neutral,negative), attachments=negative_tweets)
+        
 c=twint.Config()
 while True:
     queries = collection.distinct("company")
